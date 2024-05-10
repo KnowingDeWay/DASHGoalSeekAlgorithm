@@ -1,0 +1,6 @@
+@GoalSeekAlgorithm.Server_HostAddress = http://localhost:5182
+
+GET {{GoalSeekAlgorithm.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
