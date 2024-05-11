@@ -1,20 +1,19 @@
 ﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
 
 namespace GoalSeekAlgorithm.Server.RequestModels
 {
     public class GoalSeekRequestModel
     {
-        [JsonPropertyName("formula")]
+        [JsonProperty("formula")]
         public string? Formula { get; set; }
 
-        [JsonPropertyName("input")]
-        public int Input { get; set; }
+        [JsonProperty("input")]
+        public double Input { get; set; }
 
-        [JsonPropertyName("targetResult")]
-        public int TargetResult { get; set; }
+        [JsonProperty("targetResult")]
+        public double TargetResult { get; set; }
 
-        [JsonPropertyName("maximumIterations")]
+        [JsonProperty("maximumIterations")]
         public int MaximumIterations { get; set; }
     }
 }
