@@ -4,6 +4,8 @@ using GoalSeekAlgorithm.Server.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.Dynamic;
+using static Microsoft.FSharp.Core.ByRefKinds;
 
 namespace GoalSeekAlgorithmApiTests
 {
@@ -38,6 +40,52 @@ namespace GoalSeekAlgorithmApiTests
             decimal roundedValue = Math.Round((decimal)calculatedValue, 9);
 
             Assert.True(roundedValue == expectedAnswer);
+        }
+
+        [Theory]
+        [InlineData("a * input - 3")]
+        [InlineData("5 * input * input - 9 - x")]
+        [InlineData("-3 * input + 4r")]
+        [InlineData("definitely invalid")]
+        public async void GSA_Invalid_Formula_Returns_400_Error(string formula)
+        {
+            GoalSeekRequestModel requestModel = new GoalSeekRequestModel
+            {
+                Formula = formula,
+                Input = 10,
+                TargetResult = 55,
+                MaximumIterations = 2
+            };
+
+            ILogger logger = Mock.Of<ILogger>();
+
+            ApiController apiController = new ApiController(logger);
+
+            ActionResult returnedResult = await apiController.GoalSeek(requestModel);
+
+            Assert.True(returnedResult is BadRequestObjectResult);
+        }
+
+        [Theory]
+        [InlineData("2 * input", (dynamic)"", 3, 10)]
+        [InlineData("3 * input * input - 9", 1, (dynamic)"20", 4)]
+        [InlineData("-9 * input", 10, 457, (dynamic)"x")]
+        [InlineData((dynamic)10, (dynamic)"x", 22, (dynamic)"1009")]
+        public async void GSA_Invalid_Params_Returns_400(dynamic formula, dynamic input, dynamic targetResult, dynamic maxIterations)
+        {
+            dynamic requestModel = new ExpandoObject();
+            requestModel.Formula = formula;
+            requestModel.Input = input;
+            requestModel.TargetResult = targetResult;
+            requestModel.MaxIterations = maxIterations;
+
+            ILogger logger = Mock.Of<ILogger>();
+
+            ApiController apiController = new ApiController(logger);
+
+            ActionResult returnedResult = await apiController.GoalSeek(requestModel);
+
+            Assert.True(returnedResult is BadRequestObjectResult);
         }
     }
 }
