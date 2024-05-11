@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace GoalSeekAlgorithm.Server.RequestModels
 {

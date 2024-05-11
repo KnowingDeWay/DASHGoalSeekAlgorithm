@@ -1,6 +1,13 @@
 @GoalSeekAlgorithm.Server_HostAddress = http://localhost:5182
 
-GET {{GoalSeekAlgorithm.Server_HostAddress}}/weatherforecast/
+POST {{GoalSeekAlgorithm.Server_HostAddress}}/api/goalseek
 Accept: application/json
+Content-Type: application/json
 
+{
+  "formula": "12 * input * input - 6 * input + 55",
+  "input": 3,
+  "targetResult": 317,
+  "maximumIterations": 20
+}
 ###
