@@ -1,0 +1,22 @@
+.cardContainer {
+  background-color: whitesmoke;
+  vertical-align: middle;
+  height: 500px;
+  width: 600px;
+  margin-left: 400px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.formContainer {
+  margin-top: 40px;
+  margin-left: 30px;
+}
+
+.inputField {
+}
+
+.formHeading {
+  margin-left: 110px;
+  padding-top: 10px;
+}
