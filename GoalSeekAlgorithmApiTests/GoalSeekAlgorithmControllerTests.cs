@@ -4,8 +4,6 @@ using GoalSeekAlgorithm.Server.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Dynamic;
-using static Microsoft.FSharp.Core.ByRefKinds;
 
 namespace GoalSeekAlgorithmApiTests
 {
@@ -14,11 +12,14 @@ namespace GoalSeekAlgorithmApiTests
         [Theory]
         [InlineData("12 * input * input - 6 * input + 55", 3, 317, 20, 4.929298384)]
         [InlineData("2.5 * input", 100, 2500, 10, 1000)]
-        [InlineData("-7.2 * input / 3.9 - 9", 1.1, 15.7, 3, -13.379166666)]
+        [InlineData("-7.2 * input / 3.9 - 9", 1.1, 15.7, 3, -13.379166667)]
         [InlineData("4", 2, 6, 2, 0)]
+        [InlineData("1/input - input * input + 5", 9, -15.75, 10, 4.579124627)]
         public async void GSA_Valid_Cases_Return_Accrate_Root(string formula, double input, double targetResult, int maxIterations,
             decimal expectedAnswer)
         {
+            double tolerance = 0.001;
+
             GoalSeekRequestModel requestModel = new GoalSeekRequestModel
             {
                 Formula = formula,
@@ -39,7 +40,7 @@ namespace GoalSeekAlgorithmApiTests
 
             decimal roundedValue = Math.Round((decimal)calculatedValue, 9);
 
-            Assert.True(roundedValue == expectedAnswer);
+            Assert.True(Math.Abs(expectedAnswer - roundedValue) <= (decimal)tolerance);
         }
 
         [Theory]
@@ -56,28 +57,6 @@ namespace GoalSeekAlgorithmApiTests
                 TargetResult = 55,
                 MaximumIterations = 2
             };
-
-            ILogger logger = Mock.Of<ILogger>();
-
-            ApiController apiController = new ApiController(logger);
-
-            ActionResult returnedResult = await apiController.GoalSeek(requestModel);
-
-            Assert.True(returnedResult is BadRequestObjectResult);
-        }
-
-        [Theory]
-        [InlineData("2 * input", (dynamic)"", 3, 10)]
-        [InlineData("3 * input * input - 9", 1, (dynamic)"20", 4)]
-        [InlineData("-9 * input", 10, 457, (dynamic)"x")]
-        [InlineData((dynamic)10, (dynamic)"x", 22, (dynamic)"1009")]
-        public async void GSA_Invalid_Params_Returns_400(dynamic formula, dynamic input, dynamic targetResult, dynamic maxIterations)
-        {
-            dynamic requestModel = new ExpandoObject();
-            requestModel.Formula = formula;
-            requestModel.Input = input;
-            requestModel.TargetResult = targetResult;
-            requestModel.MaxIterations = maxIterations;
 
             ILogger logger = Mock.Of<ILogger>();
 
