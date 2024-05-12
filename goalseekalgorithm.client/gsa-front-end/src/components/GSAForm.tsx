@@ -49,6 +49,9 @@ export default function GSAForm() {
             </td>
           </tr>
         </table>
+        <button className={styles.gsaFormSubmitBtn}>
+          Calculate Target Input
+        </button>
       </form>
     </div>
   );

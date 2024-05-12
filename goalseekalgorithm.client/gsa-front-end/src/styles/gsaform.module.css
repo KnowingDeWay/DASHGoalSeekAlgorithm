@@ -7,3 +7,10 @@ label {
   margin-top: 20px;
   display: inline-flex;
 }
+
+.gsaFormSubmitBtn {
+  margin-left: 150px;
+  margin-top: 30px;
+  background: indigo;
+  color: white;
+}
