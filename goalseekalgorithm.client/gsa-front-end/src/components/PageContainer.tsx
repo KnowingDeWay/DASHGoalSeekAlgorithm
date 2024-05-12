@@ -1,4 +1,4 @@
-import GSAFormCard from "./GSAFormCard";
+import GSAFormCard from "./GSAFormCard.js";
 import styles from "../styles/pagecontainer.module.css";
 
 export default function PageContainer() {
