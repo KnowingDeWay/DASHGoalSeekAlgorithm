@@ -8,34 +8,6 @@
   border-radius: 5px;
 }
 
-label {
-  font-size: 12px;
-  margin-top: 30px;
-}
-
-.formContainer {
-  margin-top: 20px;
-  display: inline-flex;
-}
-
-.inputCell {
-  margin-left: 30px;
-  margin-top: 20px;
-}
-
-.innerContainer {
-  display: table;
-}
-
-.inputField {
-  border: none;
-  border-bottom: 1px solid indigo;
-  outline: none;
-  color: black;
-  background-color: transparent;
-  font-size: 14px;
-}
-
 .formHeading {
   margin-left: 110px;
   padding-top: 10px;

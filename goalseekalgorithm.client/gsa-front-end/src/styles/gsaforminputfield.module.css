@@ -1,0 +1,13 @@
+.inputCell {
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.inputField {
+  border: none;
+  border-bottom: 1px solid indigo;
+  outline: none;
+  color: black;
+  background-color: transparent;
+  font-size: 14px;
+}
