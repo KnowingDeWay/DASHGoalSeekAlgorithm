@@ -1,17 +1,15 @@
-import { useState } from "react";
-import { GoalSeekCalcResponse } from "../entities/GoalSeekCalcResponse";
 import styles from "../styles/gsaresults.module.css";
 
 export interface GSAResultsParams {
   gsaResponse: any;
-  setGsaResponse: any;
+  isLoading: boolean | undefined;
 }
 
 export default function GSAResults({
   gsaResponse,
-  setGsaResponse,
+  isLoading,
 }: GSAResultsParams) {
-  return (
+  const loadedScreen = (
     <div className={styles.resultsContainer}>
       <h2>Target Result: {gsaResponse?.targetInput ?? "n/a"}</h2>
       <h2>
@@ -19,4 +17,10 @@ export default function GSAResults({
       </h2>
     </div>
   );
+  const loadingScreen = (
+    <div className={styles.resultsContainer}>
+      <h2>Loading...</h2>
+    </div>
+  );
+  return isLoading ? loadingScreen : loadedScreen;
 }

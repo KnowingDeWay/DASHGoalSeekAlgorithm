@@ -8,17 +8,28 @@ import { GoalSeekCalcResponse } from "../entities/GoalSeekCalcResponse";
 async function onButtonSubmit(
   e: any,
   setGsaResponse: any,
-  reqModel: GoalSeekCalcRequest
+  reqModel: GoalSeekCalcRequest,
+  setIsLoading: any
 ): Promise<void> {
+  setIsLoading(true);
   e.preventDefault();
   const gsaService: GSAService = new GSAService();
   const response: GoalSeekCalcResponse = await gsaService.CalculateSolution(
     reqModel
   );
   setGsaResponse(response);
+  setIsLoading(false);
 }
 
-export default function GSAForm({ setGsaResponse }: { setGsaResponse: any }) {
+interface GSAFormParams {
+  setGsaResponse: any;
+  setIsLoading: any;
+}
+
+export default function GSAForm({
+  setGsaResponse,
+  setIsLoading,
+}: GSAFormParams) {
   const [formula, setFormula] = useState<string>("");
   const [initVal, setInitVal] = useState<string>("");
   const [targetResult, setTargetResult] = useState<string>("");
@@ -80,7 +91,7 @@ export default function GSAForm({ setGsaResponse }: { setGsaResponse: any }) {
               targetResult: parseFloat(targetResult),
               maximumIterations: parseInt(maxIterations),
             };
-            onButtonSubmit(e, setGsaResponse, reqModel);
+            onButtonSubmit(e, setGsaResponse, reqModel, setIsLoading);
           }}
         >
           Calculate Target Input
