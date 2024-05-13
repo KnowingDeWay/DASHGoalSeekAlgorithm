@@ -1,8 +1,24 @@
 import { useState } from "react";
 import styles from "../styles/gsaform.module.css";
 import GSAFormInputField from "../components/GSAFormInputField";
+import { GSAService } from "../services/gsa.service";
+import { GoalSeekCalcRequest } from "../entities/GoalSeekCalcRequest";
+import { GoalSeekCalcResponse } from "../entities/GoalSeekCalcResponse";
 
-export default function GSAForm() {
+async function onButtonSubmit(
+  e: any,
+  setGsaResponse: any,
+  reqModel: GoalSeekCalcRequest
+): Promise<void> {
+  e.preventDefault();
+  const gsaService: GSAService = new GSAService();
+  const response: GoalSeekCalcResponse = await gsaService.CalculateSolution(
+    reqModel
+  );
+  setGsaResponse(response);
+}
+
+export default function GSAForm({ setGsaResponse }: { setGsaResponse: any }) {
   const [formula, setFormula] = useState<string>("");
   const [initVal, setInitVal] = useState<string>("");
   const [targetResult, setTargetResult] = useState<string>("");
@@ -12,44 +28,61 @@ export default function GSAForm() {
     <div className={styles.formContainer}>
       <form>
         <table>
-          <tr>
-            <td>
-              <GSAFormInputField
-                value={formula}
-                setValue={setFormula}
-                labelText="Enter Formula (use 'input' as variable)"
-                inputFieldId="formulaInput"
-              />
-            </td>
-            <td>
-              <GSAFormInputField
-                value={initVal}
-                setValue={setInitVal}
-                labelText="Enter Initial Value (x0)"
-                inputFieldId="initValInput"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <GSAFormInputField
-                value={targetResult}
-                setValue={setTargetResult}
-                labelText="Enter Target Result"
-                inputFieldId="targetResInput"
-              />
-            </td>
-            <td>
-              <GSAFormInputField
-                value={maxIterations}
-                setValue={setMaxIterations}
-                labelText="Enter Max Number of Iterations"
-                inputFieldId="maxItrsInput"
-              />
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                <GSAFormInputField
+                  value={formula}
+                  setValue={setFormula}
+                  labelText="Enter Formula (use 'input' as variable)"
+                  inputFieldId="formulaInput"
+                  inputType="text"
+                />
+              </td>
+              <td>
+                <GSAFormInputField
+                  value={initVal}
+                  setValue={setInitVal}
+                  labelText="Enter Initial Value (x0)"
+                  inputFieldId="initValInput"
+                  inputType="number"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <GSAFormInputField
+                  value={targetResult}
+                  setValue={setTargetResult}
+                  labelText="Enter Target Result"
+                  inputFieldId="targetResInput"
+                  inputType="number"
+                />
+              </td>
+              <td>
+                <GSAFormInputField
+                  value={maxIterations}
+                  setValue={setMaxIterations}
+                  labelText="Enter Max Number of Iterations"
+                  inputFieldId="maxItrsInput"
+                  inputType="number"
+                />
+              </td>
+            </tr>
+          </tbody>
         </table>
-        <button className={styles.gsaFormSubmitBtn}>
+        <button
+          className={styles.gsaFormSubmitBtn}
+          onClick={(e) => {
+            const reqModel: GoalSeekCalcRequest = {
+              formula: formula,
+              input: parseFloat(initVal),
+              targetResult: parseFloat(targetResult),
+              maximumIterations: parseInt(maxIterations),
+            };
+            onButtonSubmit(e, setGsaResponse, reqModel);
+          }}
+        >
           Calculate Target Input
         </button>
       </form>

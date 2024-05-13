@@ -50,4 +50,12 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
+
+// Only localhost requests are allowed
+app.UseCors(options =>
+{
+    options.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
+    options.AllowAnyHeader();
+});
+
 app.Run();

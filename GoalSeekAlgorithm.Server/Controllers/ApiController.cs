@@ -8,18 +8,14 @@ using Microsoft.CodeAnalysis.Scripting;
 namespace GoalSeekAlgorithm.Server.Controllers
 {
     /// <summary>
-    /// Controller containing endpoint(s) that are involved in providing a suite of operations related with the usuage of the
+    /// Controller containing endpoint(s) that are involved in providing a suite of operations related with the usage of the
     /// Goal Seek Algorithm to seek solutions to various equations
     /// </summary>
     [ApiController]
     [Route("[controller]/[action]")]
-    public class ApiController : ControllerBase
+    public class ApiController(ILogger logger) : ControllerBase
     {
-        private readonly ILogger _logger;
-        public ApiController(ILogger logger) 
-        {
-            _logger = logger;
-        }
+        private readonly ILogger _logger = logger;
 
         /// <summary>
         /// An endpoint method which will attempt to find an approximate root/answer to a specified equation with parameters set
@@ -54,7 +50,7 @@ namespace GoalSeekAlgorithm.Server.Controllers
                 for (int i = 0; i < requestModel.MaximumIterations; i++)
                 {
                     // Goal seek algorithm stops when answer is within 0.001 difference from the
-                    // desired result
+                    // desired result (see: https://mathstat.slu.edu/~may/ExcelCalculus/sec-1-6-GoalSeek.html)
                     if (Math.Abs(fx.Invoke(answer)) > 0.001)
                     {
                         answer = ApplyNewtonsMethod(answer, fx);

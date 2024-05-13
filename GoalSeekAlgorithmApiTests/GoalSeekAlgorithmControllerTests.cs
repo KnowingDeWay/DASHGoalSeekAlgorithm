@@ -9,6 +9,9 @@ namespace GoalSeekAlgorithmApiTests
 {
     public class GoalSeekAlgorithmControllerTests
     {
+
+        // The following inline data expected values come from an online newton's method calculator...
+        // see: https://planetcalc.com/7748/
         [Theory]
         [InlineData("12 * input * input - 6 * input + 55", 3, 317, 20, 4.929298384)]
         [InlineData("2.5 * input", 100, 2500, 10, 1000)]
@@ -18,6 +21,8 @@ namespace GoalSeekAlgorithmApiTests
         public async void GSA_Valid_Cases_Return_Accrate_Root(string formula, double input, double targetResult, int maxIterations,
             decimal expectedAnswer)
         {
+            // Goal seek alogrithm allows for this tolerance level
+            // see: https://mathstat.slu.edu/~may/ExcelCalculus/sec-1-6-GoalSeek.html
             double tolerance = 0.001;
 
             GoalSeekRequestModel requestModel = new GoalSeekRequestModel

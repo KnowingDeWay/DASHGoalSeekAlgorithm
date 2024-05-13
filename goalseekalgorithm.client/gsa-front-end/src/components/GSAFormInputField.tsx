@@ -5,6 +5,7 @@ interface GSAFormInputParams {
   setValue: any;
   labelText: string;
   inputFieldId: string;
+  inputType: string;
 }
 
 export default function GSAFormInputField({
@@ -12,13 +13,14 @@ export default function GSAFormInputField({
   setValue,
   labelText,
   inputFieldId,
+  inputType,
 }: GSAFormInputParams) {
   return (
     <div className={styles.inputCell}>
       <label htmlFor={inputFieldId}>{labelText}</label>
       <br />
       <input
-        type="text"
+        type={inputType}
         id={inputFieldId}
         className={styles.inputField}
         value={value}

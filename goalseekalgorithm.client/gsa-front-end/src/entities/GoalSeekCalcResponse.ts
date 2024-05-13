@@ -1,4 +1,4 @@
 export interface GoalSeekCalcResponse {
-  targetInput: number | undefined;
-  iterationsRequired: number | undefined;
+  targetInput: number | undefined | null;
+  iterationsRequired: number | undefined | null;
 }
