@@ -21,9 +21,11 @@ namespace GoalSeekAlgorithmApiTests
         public async void GSA_Valid_Cases_Return_Accrate_Root(string formula, double input, double targetResult, int maxIterations,
             decimal expectedAnswer)
         {
-            // Goal seek alogrithm allows for this tolerance level
-            // see: https://mathstat.slu.edu/~may/ExcelCalculus/sec-1-6-GoalSeek.html
-            double tolerance = 0.001;
+            // Different implementations of Newton's method across the web deliver slightly different
+            // results due to various differing implmentations of differentiation functionality among
+            // other possible factors. To accommodate for this, a tolerance factor of ±0.001% has been
+            // applied from the 'expected' answer
+            decimal tolerance = 0.00001M;
 
             GoalSeekRequestModel requestModel = new GoalSeekRequestModel
             {
@@ -45,7 +47,7 @@ namespace GoalSeekAlgorithmApiTests
 
             decimal roundedValue = Math.Round((decimal)calculatedValue, 9);
 
-            Assert.True(Math.Abs(expectedAnswer - roundedValue) <= (decimal)tolerance);
+            Assert.True(Math.Abs(expectedAnswer - roundedValue) <= Math.Abs(expectedAnswer * tolerance));
         }
 
         [Theory]
