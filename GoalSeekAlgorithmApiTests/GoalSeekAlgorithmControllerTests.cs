@@ -22,7 +22,7 @@ namespace GoalSeekAlgorithmApiTests
             decimal expectedAnswer)
         {
             // Different implementations of Newton's method across the web deliver slightly different
-            // results due to various differing implmentations of differentiation functionality among
+            // results due to various differing implementations of differentiation functionality among
             // other possible factors. To accommodate for this, a tolerance factor of ±0.001% has been
             // applied from the 'expected' answer
             decimal tolerance = 0.00001M;
