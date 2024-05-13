@@ -1,16 +1,18 @@
 import styles from "../styles/gsaforminputfield.module.css";
 
+interface GSAFormInputParams {
+  value: any;
+  setValue: any;
+  labelText: string;
+  inputFieldId: string;
+}
+
 export default function GSAFormInputField({
   value,
   setValue,
   labelText,
   inputFieldId,
-}: {
-  value: any;
-  setValue: any;
-  labelText: string;
-  inputFieldId: string;
-}) {
+}: GSAFormInputParams) {
   return (
     <div className={styles.inputCell}>
       <label htmlFor={inputFieldId}>{labelText}</label>
