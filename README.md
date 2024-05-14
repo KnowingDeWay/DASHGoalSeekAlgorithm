@@ -23,8 +23,8 @@ Instructions to start project:
 
 1. Open GoalSeekAlgorithm.sln file and select the GoalSeekAlgorithm.Server project and then click the green play button above to run the back-end system.
 2. Open the goalseekalgorithm.client/gsa-front-end folder in Visual Studio Code.
-3. Go to the top toolbar and then click the Terminal drop down menu and then click 'New Terminal'.
-4. In the loaded terminal, type npm run dev and then press enter.
+3. Go to the top toolbar and then click the Terminal drop down menu and then click 'New Terminal'. Then type 'npm install' to install all required dependencies.
+4. After the above packages have been installed, type npm run dev and then press enter.
 5. Go to the URL displayed by VITE in the terminal and then Ctrl+Click on the URL to load the UI page.
 6. You may now enter values into the form of the UI field, click the purple button when you want to calculate the solution to your equation.
 7. Done!
