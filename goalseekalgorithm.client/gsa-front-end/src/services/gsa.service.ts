@@ -15,7 +15,6 @@ export class GSAService {
       targetInput: null,
       iterationsRequired: null,
     };
-    console.log(this.apiBaseAddress);
     await axios
       .post(this.calculateGsaUrl, requestModel, {})
       .then(function (res) {
